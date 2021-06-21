@@ -1,36 +1,49 @@
-from pyflink.dataset import ExecutionEnvironment
-from pyflink.table import TableConfig, DataTypes, BatchTableEnvironment
-from pyflink.table.descriptors import Schema, OldCsv, Csv, FileSystem
+from pyflink.table import TableConfig, DataTypes, BatchTableEnvironment, \
+    EnvironmentSettings
 
-exec_env = ExecutionEnvironment.get_execution_environment()
-exec_env.set_parallelism(1)
-t_config = TableConfig()
-t_env = BatchTableEnvironment.create(exec_env, t_config)
+INPUT_TABLE = "mySource"
+OUTPUT_TABLE = "mySink"
 
-t_env.connect(
-    FileSystem().path("/opt/examples/data/input/words.csv")).with_format(
-    OldCsv().field("word", DataTypes.STRING())
-).with_schema(
-    Schema().field("word", DataTypes.STRING())).create_temporary_table(
-    "mySource"
+# environment configuration
+t_env = BatchTableEnvironment.create(
+    environment_settings=EnvironmentSettings.new_instance()
+        .in_batch_mode()
+        .use_blink_planner()
+        .build()
+)
+t_env.get_config().get_configuration().set_integer(
+    "table.exec.resource.default-parallelism", 1
 )
 
-t_env.connect(
-    FileSystem().path("/opt/examples/data/output/1_word_count_output.csv")
-).with_format(
-    OldCsv()
-        .field_delimiter("\t")
-        .field("word", DataTypes.STRING())
-        .field("count", DataTypes.BIGINT())
-).with_schema(
-    Schema().field("word", DataTypes.STRING()).field("count",
-                                                     DataTypes.BIGINT())
-).create_temporary_table(
-    "mySink"
-)
+ddl_source = f"""
+       CREATE TABLE {INPUT_TABLE} (
+         word STRING
+       ) WITH (
+        'connector' = 'filesystem',
+        'format' = 'csv',
+        'csv.field-delimiter' = ' ',
+        'csv.disable-quote-character' = 'true',
+        'csv.ignore-parse-errors' = 'true',
+        'path' = '/opt/examples/data/input/words1.csv'
+    )
+   """
 
-t_env.from_path("mySource").group_by("word").select(
+ddl_sink = f"""
+       CREATE TABLE {OUTPUT_TABLE} (
+         word STRING,
+        `count` BIGINT
+       ) WITH (
+        'connector' = 'filesystem',
+        'format' = 'csv',
+        'path' = '/opt/examples/data/output/1_word_count_output'
+    )
+   """
+
+t_env.execute_sql(ddl_source)
+t_env.execute_sql(ddl_sink)
+
+t_env.from_path(INPUT_TABLE).group_by("word").select(
     "word, count(1) as count"
-).execute_insert("mySink")
+).insert_overwrite(OUTPUT_TABLE)
 
-t_env.execute_insert("1-word_count")
+t_env.execute("1-word_count")
