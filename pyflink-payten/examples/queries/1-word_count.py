@@ -31,6 +31,6 @@ t_env.connect(
 
 t_env.from_path("mySource").group_by("word").select(
     "word, count(1) as count"
-).insert_into("mySink")
+).execute_insert("mySink")
 
-t_env.execute("1-word_count")
+t_env.execute_insert("1-word_count")
