@@ -44,6 +44,6 @@ t_env.execute_sql(ddl_sink)
 
 t_env.from_path(INPUT_TABLE).group_by("word").select(
     "word, count(1) as count"
-).insert_overwrite(OUTPUT_TABLE)
+).insert_into(OUTPUT_TABLE)
 
 t_env.execute("1-word_count")
