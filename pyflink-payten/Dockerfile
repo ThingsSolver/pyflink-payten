@@ -24,13 +24,8 @@ RUN wget -P /opt/flink/lib/ https://repo.maven.apache.org/maven2/org/apache/flin
 
 # Create data folders
     mkdir -p /opt/data; \
-   # mkdir -p /opt/data/stream; \
-    #echo "taskmanager.network.numberOfBuffers: 8g" >> /opt/flink/conf/flink-conf.yaml; \
-    #echo "taskmanager.memory.managed.size:0m" >> /opt/flink/conf/flink-conf.yaml; \
     echo "taskmanager.memory.jvm-metaspace.size: 512m" >> /opt/flink/conf/flink-conf.yaml; \
     echo "rest.port: 8088" >> /opt/flink/conf/flink-conf.yaml;
 
 
 WORKDIR /opt/flink/
-#ADD app /opt/flink/app
-#CMD [ "python", "app/kafka_app.py" ]
