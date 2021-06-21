@@ -19,11 +19,12 @@ docker-compose up -d
 * **Windows**
 
 ```
-ccd pyflink-payten/pyflink-payten
+cd pyflink-payten/pyflink-payten
 set COMPOSE_CONVERT_WINDOWS_PATHS=1
 docker-compose up -d
 ```
 
 You can check whether the environment is running correctly 
-by visiting Flink Web UI 
+by visiting Flink Web UI:
+
 [http://localhost:8088](http://localhost:8088).
