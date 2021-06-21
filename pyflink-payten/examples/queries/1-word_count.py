@@ -7,9 +7,11 @@ exec_env.set_parallelism(1)
 t_config = TableConfig()
 t_env = BatchTableEnvironment.create(exec_env, t_config)
 
-t_env.connect(FileSystem().path("/opt/examples/data/input/proo.csv")).with_format(
+t_env.connect(
+    FileSystem().path("/opt/examples/data/input/words.csv")).with_format(
     OldCsv().field("word", DataTypes.STRING())
-).with_schema(Schema().field("word", DataTypes.STRING())).create_temporary_table(
+).with_schema(
+    Schema().field("word", DataTypes.STRING())).create_temporary_table(
     "mySource"
 )
 
@@ -17,15 +19,15 @@ t_env.connect(
     FileSystem().path("/opt/examples/data/output/1_word_count_output.csv")
 ).with_format(
     OldCsv()
-    .field_delimiter("\t")
-    .field("word", DataTypes.STRING())
-    .field("count", DataTypes.BIGINT())
+        .field_delimiter("\t")
+        .field("word", DataTypes.STRING())
+        .field("count", DataTypes.BIGINT())
 ).with_schema(
-    Schema().field("word", DataTypes.STRING()).field("count", DataTypes.BIGINT())
+    Schema().field("word", DataTypes.STRING()).field("count",
+                                                     DataTypes.BIGINT())
 ).create_temporary_table(
     "mySink"
 )
-
 
 t_env.from_path("mySource").group_by("word").select(
     "word, count(1) as count"
