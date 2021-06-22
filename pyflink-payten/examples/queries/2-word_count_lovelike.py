@@ -11,28 +11,30 @@ t_env.connect(
     FileSystem().path("/opt/examples/data/input/products_with_pipe.csv")
 ).with_format(
     OldCsv()
-    .ignore_first_line()
-    .field_delimiter("|")
-    .field("overall", DataTypes.STRING())
-    .field("verified", DataTypes.STRING())
-    .field("asin", DataTypes.STRING())
-    .field("reviewText", DataTypes.STRING())
-    .field("summary", DataTypes.STRING())
+        .ignore_first_line()
+        .field_delimiter("|")
+        .field("overall", DataTypes.STRING())
+        .field("verified", DataTypes.STRING())
+        .field("asin", DataTypes.STRING())
+        .field("reviewText", DataTypes.STRING())
+        .field("summary", DataTypes.STRING())
 ).with_schema(
     Schema()
-    .field("overall", DataTypes.STRING())
-    .field("verified", DataTypes.STRING())
-    .field("asin", DataTypes.STRING())
-    .field("reviewText", DataTypes.STRING())
-    .field("summary", DataTypes.STRING())
+        .field("overall", DataTypes.STRING())
+        .field("verified", DataTypes.STRING())
+        .field("asin", DataTypes.STRING())
+        .field("reviewText", DataTypes.STRING())
+        .field("summary", DataTypes.STRING())
 ).create_temporary_table(
     "mySource"
 )
 
 t_env.connect(
-    FileSystem().path("/opt/examples/data/output/2_word_count_lovelike_output.csv")
+    FileSystem().path(
+        "/opt/examples/data/output/2_word_count_lovelike_output.csv")
 ).with_format(Csv().derive_schema()).with_schema(
-    Schema().field("reviewText", DataTypes.STRING()).field("counts", DataTypes.INT())
+    Schema().field("reviewText", DataTypes.STRING()).field("counts",
+                                                           DataTypes.INT())
 ).create_temporary_table(
     "mySink"
 )

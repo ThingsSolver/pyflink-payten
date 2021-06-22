@@ -23,20 +23,20 @@ t_env.connect(
     FileSystem().path("/opt/examples/data/input/products_with_pipe_100.csv")
 ).with_format(
     OldCsv()
-    .ignore_first_line()
-    .field_delimiter("|")
-    .field("overall", DataTypes.STRING())
-    .field("verified", DataTypes.STRING())
-    .field("asin", DataTypes.STRING())
-    .field("reviewText", DataTypes.STRING())
-    .field("summary", DataTypes.STRING())
+        .ignore_first_line()
+        .field_delimiter("|")
+        .field("overall", DataTypes.STRING())
+        .field("verified", DataTypes.STRING())
+        .field("asin", DataTypes.STRING())
+        .field("reviewText", DataTypes.STRING())
+        .field("summary", DataTypes.STRING())
 ).with_schema(
     Schema()
-    .field("overall", DataTypes.STRING())
-    .field("verified", DataTypes.STRING())
-    .field("asin", DataTypes.STRING())
-    .field("reviewText", DataTypes.STRING())
-    .field("summary", DataTypes.STRING())
+        .field("overall", DataTypes.STRING())
+        .field("verified", DataTypes.STRING())
+        .field("asin", DataTypes.STRING())
+        .field("reviewText", DataTypes.STRING())
+        .field("summary", DataTypes.STRING())
 ).create_temporary_table(
     "mySource"
 )
@@ -46,14 +46,17 @@ t_env.connect(
         "/opt/examples/data/output/3_word_count_percent_function_output_100.csv"
     )
 ).with_format(
-    OldCsv().field("reviewText", DataTypes.STRING()).field("counts", DataTypes.INT())
+    OldCsv().field("reviewText", DataTypes.STRING()).field("counts",
+                                                           DataTypes.INT())
 ).with_schema(
-    Schema().field("reviewText", DataTypes.STRING()).field("counts", DataTypes.INT())
+    Schema().field("reviewText", DataTypes.STRING()).field("counts",
+                                                           DataTypes.INT())
 ).create_temporary_table(
     "mySink"
 )
 
-t_env.from_path("mySource").select("reviewText, percent_count(reviewText)").insert_into(
+t_env.from_path("mySource").select(
+    "reviewText, percent_count(reviewText)").insert_into(
     "mySink"
 )
 t_env.execute("3-word_count_percent-function1")
