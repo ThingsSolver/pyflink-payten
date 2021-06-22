@@ -45,7 +45,7 @@ t_env.connect(
 )
 
 final_table = t_env.sql_query(
-    """select 
+    """select
     avg(transaction_amount) as avg_ta,
     min(transaction_amount) min_ta,
     max(transaction_amount) max_ta,

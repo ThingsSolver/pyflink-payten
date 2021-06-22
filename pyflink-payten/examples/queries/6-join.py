@@ -111,10 +111,10 @@ t_env.connect(
 )
 
 final_table = t_env.sql_query(
-    """select 
+    """select
         count(customer_id) as customers_no,
-        MIN(brand) as brand, 
-        product_id 
+        MIN(brand) as brand,
+        product_id
         from transactions t left join products p on t.product_id = p.asin
         group by product_id
     """

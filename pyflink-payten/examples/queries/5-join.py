@@ -153,30 +153,30 @@ t_env.connect(
 )
 
 final_table = t_env.sql_query(
-    """ 
+    """
     select
-        transaction_id, 
+        transaction_id,
         product_id,
         transaction_amount,
         transaction_date,
         c.customer_id,
-        category, 
-        c.title as ctitle, 
-        brand, 
+        category,
+        c.title as ctitle,
+        brand,
         `rank`,   --- escaped rank reserved word
         main_cat,
         first_name,
-        last_name, 
-        gender, 
-        ssn, 
-        credit_card, 
+        last_name,
+        gender,
+        ssn,
+        credit_card,
         credit_card_provider,
-        birth_date, 
-        start_date, 
-        office, 
-        organization, 
-        salary, 
-        bonus, 
+        birth_date,
+        start_date,
+        office,
+        organization,
+        salary,
+        bonus,
         accured_holidays
         from transactions t left join products p on t.product_id=p.asin
         left join customers c on t.customer_id=c.customer_id

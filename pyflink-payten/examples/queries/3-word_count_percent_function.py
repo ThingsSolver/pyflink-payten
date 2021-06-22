@@ -14,7 +14,7 @@ t_env.get_config().get_configuration().set_string(
 
 @udf(input_types=DataTypes.STRING(), result_type=DataTypes.INT())
 def percent_count(text):
-    return len(re.findall("""\d+(?:\.\d+)?%""", text))
+    return len(re.findall("""\\d+(?:\\.\\d+)?%""", text))
 
 
 t_env.register_function("percent_count", percent_count)
@@ -53,7 +53,6 @@ t_env.connect(
     "mySink"
 )
 
-t_env.from_path("mySource").select("reviewText, percent_count(reviewText)").insert_into(
-    "mySink"
-)
+t_env.from_path("mySource").select(
+    "reviewText, percent_count(reviewText)").insert_into("mySink")
 t_env.execute("3-word_count_percent-function1")
