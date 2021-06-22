@@ -30,21 +30,20 @@ t_env.connect(
 )
 
 t_env.connect(
-    FileSystem().path(
-        "/opt/examples/data/output/2_word_count_lovelike_output.csv")
+    FileSystem().path("/opt/examples/data/output/2_word_count_lovelike_output.csv")
 ).with_format(Csv().derive_schema()).with_schema(
-    Schema().field("reviewText", DataTypes.STRING()).field("counts",
-                                                           DataTypes.INT())
+    Schema().field("reviewText", DataTypes.STRING()).field("counts", DataTypes.INT())
 ).create_temporary_table(
     "mySink"
 )
 
 # query
 final_table = t_env.sql_query(
-    """SELECT 
+    """
+    SELECT 
     reviewText,
     (CHAR_LENGTH(reviewText)-
-    CHAR_LENGTH(REPLACE(reviewText, 'like', ''))) / char_length('like') + 
+     CHAR_LENGTH(REPLACE(reviewText, 'like', ''))) / char_length('like') + 
     (CHAR_LENGTH(reviewText)-
     CHAR_LENGTH(REPLACE(reviewText, 'love', ''))) / char_length('love')
     FROM mySource

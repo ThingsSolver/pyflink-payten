@@ -1,5 +1,9 @@
-from pyflink.table import TableConfig, DataTypes, BatchTableEnvironment, \
-    EnvironmentSettings
+from pyflink.table import (
+    TableConfig,
+    DataTypes,
+    BatchTableEnvironment,
+    EnvironmentSettings,
+)
 
 INPUT_TABLE = "mySource"
 OUTPUT_TABLE = "mySink"
