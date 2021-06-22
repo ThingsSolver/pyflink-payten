@@ -77,14 +77,14 @@ def generator_by_picked_seed(seed, customer_no, transaction_no, shape):
     return transactions
 
 
-customer_no = 500000
-transaction_no = 1000000
+customer_no = 10000
+transaction_no = 50000
 products_no = 2500
 
 product_id_df = pandas.read_csv(
     "../data/products_ids_no.csv", header=None, names=["product_id"]
 )
-customer_id_df = pandas.read_csv("../data/customers_ids_10000000.csv")
+customer_id_df = pandas.read_csv("../data/customers_ids_10000.csv")
 products = product_id_df.head(products_no)
 customers = customer_id_df.head(customer_no)
 
