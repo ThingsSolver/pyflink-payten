@@ -7,8 +7,6 @@ exec_env.set_parallelism(6)
 t_config = TableConfig()
 t_env = BatchTableEnvironment.create(exec_env, t_config)
 
-# "transaction_id","product_id","transaction_amount","transaction_date","customer_id"
-# "172161","9742356831",49.01,"2020-02-08 08:09:39","754658"
 t_env.connect(
     FileSystem().path("/opt/examples/data/input/transactions.csv")
 ).with_format(
