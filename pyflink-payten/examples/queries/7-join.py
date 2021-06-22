@@ -8,7 +8,6 @@ exec_env.set_parallelism(6)
 t_config = TableConfig()
 t_env = BatchTableEnvironment.create(exec_env, t_config)
 
-# t_env.get_config().get_configuration().set_integer("taskmanager.memory.managed.size", 0)
 # "asin","category","title","brand","rank","main_cat"
 t_env.connect(
     FileSystem().path("/opt/examples/data/input/products_no_duplicates.csv")
@@ -32,9 +31,8 @@ t_env.connect(
 ).create_temporary_table(
     "products"
 )
-# "customer_id","first_name","last_name","gender","ssn","credit_card","credit_card_provider","birth_date","start_date","title","office","organization","salary","bonus","accured_holidays"
-# "547874","George","Clayton","M","003-77-1939","3585853856999379","VISA 16 digit","1985-01-20","2018-01-12","VP","Seattle","Product",152000,24000,1
-t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv")).with_format(
+t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv"))\
+    .with_format(
     OldCsv()
     .ignore_first_line()
     .field_delimiter(",")
@@ -75,8 +73,7 @@ t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv")).with_
     "customers"
 )
 
-# "transaction_id","product_id","transaction_amount","transaction_date","customer_id"
-# "172161","9742356831",49.01,"2020-02-08 08:09:39","754658"
+
 t_env.connect(
     FileSystem().path("/opt/examples/data/input/transactions.csv")
 ).with_format(
@@ -113,9 +110,6 @@ t_env.connect(
     "mySink"
 )
 
-# t_env.get_config().get_configuration().set_boolean("pipeline.object-reuse", True)
-# t_env.get_config().get_configuration().set_string("table.exec.mini-batch.enabled", "true")
-# t_env.get_config().get_configuration().set_string("table.exec.mini-batch.size", "300000")
 # query 7 join group by customers
 final_table = t_env.sql_query(
     """select
@@ -124,7 +118,8 @@ final_table = t_env.sql_query(
         avg(transaction_amount) as avg_ta,
         avg(salary+bonus) as avg_income,
         avg(salary+bonus) - avg(transaction_amount) as spending
-        from transactions t left join customers c  on t.customer_id = c.customer_id
+        from transactions t left join customers c  
+        on t.customer_id = c.customer_id
         group by c.customer_id
         --having avg(transaction_amount) > 500
     """
