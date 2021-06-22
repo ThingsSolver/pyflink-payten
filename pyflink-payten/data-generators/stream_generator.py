@@ -1,14 +1,14 @@
 import time
-
-start_time = time.time()
+import pandas
+import random
 
 from faker import Faker
 from kafka import KafkaProducer
 from time import sleep
 from json import dumps
-import pandas
 from random import randint
-import random
+
+start_time = time.time()
 
 # TRANSACTION GENERATOR
 fake = Faker()
@@ -19,7 +19,8 @@ def get_transaction_amount():
 
 
 def get_transaction_date(fake):
-    return fake.date_time_between(start_date="-60s", end_date="now").isoformat()
+    return fake.date_time_between(start_date="-60s",
+                                  end_date="now").isoformat()
 
 
 def create_financials_record():
@@ -29,7 +30,8 @@ def create_financials_record():
     }
 
 
-transactions = pandas.DataFrame([create_financials_record() for _ in range(2000)])
+transactions = pandas.DataFrame(
+    [create_financials_record() for _ in range(2000)])
 producer = KafkaProducer(
     bootstrap_servers=["localhost:9092"],
     value_serializer=lambda x: dumps(x).encode("utf-8"),
