@@ -9,7 +9,7 @@ env.set_parallelism(1)
 t_env = StreamTableEnvironment.create(env)
 t_env.get_config().get_configuration().set_integer("python.fn-execution.bundle.size", 10000)
 t_env.get_config().get_configuration().set_integer("python.fn-execution.bundle.time", 1000)
-t_env.get_config().get_configuration().set_string("taskmanager.memory.task.off-heap.size", '300m')
+t_env.get_config().get_configuration().set_string("taskmanager.memory.task.off-heap.size", '80m')
 
 
 @udf(input_types=DataTypes.STRING(), result_type=DataTypes.INT())

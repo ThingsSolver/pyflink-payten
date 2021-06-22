@@ -5,7 +5,7 @@ from pyflink.table.descriptors import Schema, OldCsv, FileSystem
 from pyflink.table.udf import udf
 
 env = StreamExecutionEnvironment.get_execution_environment()
-env.set_parallelism(6)
+env.set_parallelism(1)
 t_env = StreamTableEnvironment.create(env)
 t_env.get_config().get_configuration().set_string(
     "taskmanager.memory.task.off-heap.size", "80m"
@@ -20,7 +20,7 @@ def percent_count(text):
 t_env.register_function("percent_count", percent_count)
 
 t_env.connect(
-    FileSystem().path("/opt/examples/data/input/products_with_pipe.csv")
+    FileSystem().path("/opt/examples/data/input/products_with_pipe_100.csv")
 ).with_format(
     OldCsv()
     .ignore_first_line()
@@ -43,7 +43,7 @@ t_env.connect(
 
 t_env.connect(
     FileSystem().path(
-        "/opt/examples/data/output/3_word_count_percent_function_output.csv"
+        "/opt/examples/data/output/3_word_count_percent_function_output_100.csv"
     )
 ).with_format(
     OldCsv().field("reviewText", DataTypes.STRING()).field("counts", DataTypes.INT())
@@ -56,4 +56,4 @@ t_env.connect(
 t_env.from_path("mySource").select("reviewText, percent_count(reviewText)").insert_into(
     "mySink"
 )
-t_env.execute("3-word_count_percent-function")
+t_env.execute("3-word_count_percent-function1")

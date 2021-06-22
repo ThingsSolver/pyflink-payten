@@ -19,12 +19,6 @@ def first_name_and_gender():
     return g, n
 
 
-def first_name_and_gender():
-    g = "M" if random.randint(0, 1) == 0 else "F"
-    n = fake.first_name_male() if g == "M" else fake.first_name_female()
-    return g, n
-
-
 def title_office_org():
     # generate a map of real office to fake office
     offices = ["New York", "Austin", "Seattle", "Chicago"]
