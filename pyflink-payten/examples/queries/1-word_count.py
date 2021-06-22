@@ -12,12 +12,12 @@ t_env = BatchTableEnvironment.create(
     .build()
 )
 t_env.get_config().get_configuration().set_integer(
-    "table.exec.resource.default-parallelism", 1
+    "table.exec.resource.default-parallelism", 6
 )
 
 ddl_source = f"""
        CREATE TABLE {INPUT_TABLE} (
-         word STRING
+         `word` STRING
        ) WITH (
         'connector' = 'filesystem',
         'format' = 'csv',
@@ -30,7 +30,7 @@ ddl_source = f"""
 
 ddl_sink = f"""
        CREATE TABLE {OUTPUT_TABLE} (
-         word STRING,
+        `word` STRING,
         `count` BIGINT
        ) WITH (
         'connector' = 'filesystem',
