@@ -7,9 +7,9 @@ OUTPUT_TABLE = "mySink"
 # environment configuration
 t_env = BatchTableEnvironment.create(
     environment_settings=EnvironmentSettings.new_instance()
-        .in_batch_mode()
-        .use_blink_planner()
-        .build()
+    .in_batch_mode()
+    .use_blink_planner()
+    .build()
 )
 t_env.get_config().get_configuration().set_integer(
     "table.exec.resource.default-parallelism", 6

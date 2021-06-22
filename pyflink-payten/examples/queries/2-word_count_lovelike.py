@@ -11,20 +11,20 @@ t_env.connect(
     FileSystem().path("/opt/examples/data/input/products_with_pipe.csv")
 ).with_format(
     OldCsv()
-        .ignore_first_line()
-        .field_delimiter("|")
-        .field("overall", DataTypes.STRING())
-        .field("verified", DataTypes.STRING())
-        .field("asin", DataTypes.STRING())
-        .field("reviewText", DataTypes.STRING())
-        .field("summary", DataTypes.STRING())
+    .ignore_first_line()
+    .field_delimiter("|")
+    .field("overall", DataTypes.STRING())
+    .field("verified", DataTypes.STRING())
+    .field("asin", DataTypes.STRING())
+    .field("reviewText", DataTypes.STRING())
+    .field("summary", DataTypes.STRING())
 ).with_schema(
     Schema()
-        .field("overall", DataTypes.STRING())
-        .field("verified", DataTypes.STRING())
-        .field("asin", DataTypes.STRING())
-        .field("reviewText", DataTypes.STRING())
-        .field("summary", DataTypes.STRING())
+    .field("overall", DataTypes.STRING())
+    .field("verified", DataTypes.STRING())
+    .field("asin", DataTypes.STRING())
+    .field("reviewText", DataTypes.STRING())
+    .field("summary", DataTypes.STRING())
 ).create_temporary_table(
     "mySource"
 )
@@ -43,8 +43,10 @@ t_env.connect(
 final_table = t_env.sql_query(
     """SELECT 
     reviewText,
-    (CHAR_LENGTH(reviewText)-CHAR_LENGTH(REPLACE(reviewText, 'like', ''))) / char_length('like') + 
-    (CHAR_LENGTH(reviewText)-CHAR_LENGTH(REPLACE(reviewText, 'love', ''))) / char_length('love')
+    (CHAR_LENGTH(reviewText)-
+    CHAR_LENGTH(REPLACE(reviewText, 'like', ''))) / char_length('like') + 
+    (CHAR_LENGTH(reviewText)-
+    CHAR_LENGTH(REPLACE(reviewText, 'love', ''))) / char_length('love')
     FROM mySource
     """
 )
