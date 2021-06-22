@@ -40,9 +40,8 @@ t_env.connect(
 ).create_temporary_table(
     "products"
 )
-# "customer_id","first_name","last_name","gender","ssn","credit_card","credit_card_provider","birth_date","start_date","title","office","organization","salary","bonus","accured_holidays"
-# "547874","George","Clayton","M","003-77-1939","3585853856999379","VISA 16 digit","1985-01-20","2018-01-12","VP","Seattle","Product",152000,24000,1
-t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv")).with_format(
+t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv"))\
+    .with_format(
     OldCsv()
     .ignore_first_line()
     .field_delimiter(",")
@@ -83,8 +82,6 @@ t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv")).with_
     "customers"
 )
 
-# "transaction_id","product_id","transaction_amount","transaction_date","customer_id"
-# "172161","9742356831",49.01,"2020-02-08 08:09:39","754658"
 t_env.connect(
     FileSystem().path("/opt/examples/data/input/transactions.csv")
 ).with_format(
@@ -138,7 +135,8 @@ final_table = t_env.sql_query(
             max(transaction_amount) as max_transaction,
             avg(cast(salary as double)) as avg_salary,
             avg(cast(bonus as double)) as avg_bonus
-            from transactions t left join customers c on t.customer_id=c.customer_id
+            from transactions t left join customers c
+            on t.customer_id=c.customer_id
             left join products p on t.product_id = p.asin
             group by c.customer_id"""
 )
