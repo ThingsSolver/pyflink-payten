@@ -86,7 +86,8 @@ final_table = t_env.sql_query(
         avg(transaction_amount) as avg_ta,
         avg(salary+bonus) as avg_income,
         avg(salary+bonus) - avg(transaction_amount) as spending
-        from transactions t left join customers c  on t.customer_id = c.customer_id
+        from transactions t left join customers c
+        on t.customer_id = c.customer_id
         group by c.customer_id
     """
 )
