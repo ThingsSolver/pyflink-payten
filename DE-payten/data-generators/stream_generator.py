@@ -31,20 +31,23 @@ def create_financials_record():
     }
 
 
-transactions = pandas.DataFrame(
-    [create_financials_record() for _ in range(2000)])
-producer = KafkaProducer(
-    bootstrap_servers=["localhost:9092"],
-    value_serializer=lambda x: dumps(x).encode("utf-8"),
-)
-
-while True:
+def create_transactions():
+    transactions = pandas.DataFrame(
+        [create_financials_record() for _ in range(2000)]
+    )
     for row in transactions.itertuples():
         data1 = str(row.transaction_amount)
         data2 = row.transaction_date + "Z"
         data = {"transaction_amount": data1, "transaction_date": data2}
         future = producer.send("transactions", value=data)
         result = future.get(timeout=60)
-
     print("--- %s seconds ---" % (time.time() - start_time))
-    time.sleep(60)
+
+
+producer = KafkaProducer(
+    bootstrap_servers=["localhost:9092"],
+    value_serializer=lambda x: dumps(x).encode("utf-8"),
+)
+while True:
+    create_transactions()
+    time.sleep(30)
