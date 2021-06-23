@@ -11,8 +11,9 @@ from pyflink.table import (
 )
 from pyflink.table.descriptors import Schema, OldCsv, Csv, FileSystem
 
-environment_settings = (EnvironmentSettings.new_instance(
-).in_batch_mode().use_blink_planner().build())
+environment_settings = (
+    EnvironmentSettings.new_instance().in_batch_mode().use_blink_planner().build()
+)
 t_env = BatchTableEnvironment.create(environment_settings=environment_settings)
 t_env.get_config().get_configuration().set_integer(
     "table.exec.resource.default-parallelism", 6
@@ -40,8 +41,7 @@ t_env.connect(
 ).create_temporary_table(
     "products"
 )
-t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv"))\
-    .with_format(
+t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv")).with_format(
     OldCsv()
     .ignore_first_line()
     .field_delimiter(",")

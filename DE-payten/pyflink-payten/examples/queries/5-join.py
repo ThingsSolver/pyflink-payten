@@ -32,8 +32,7 @@ t_env.connect(
     "products"
 )
 
-t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv"))\
-    .with_format(
+t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv")).with_format(
     OldCsv()
     .ignore_first_line()
     .field_delimiter(",")
