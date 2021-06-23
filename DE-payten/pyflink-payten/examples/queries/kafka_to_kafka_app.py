@@ -11,7 +11,8 @@ from pyflink.table.udf import udaf
 env = StreamExecutionEnvironment.get_execution_environment()
 env.set_parallelism(1)
 environment_settings = EnvironmentSettings.new_instance().use_blink_planner().build()
-t_env = StreamTableEnvironment.create(env, environment_settings=environment_settings)
+t_env = StreamTableEnvironment.create(
+    env, environment_settings=environment_settings)
 
 INPUT_TABLE = "my_topic"
 INPUT_TOPIC = "transactions"
@@ -58,7 +59,7 @@ ddl_source = f"""
 ddl_sink = f"""
        CREATE TABLE {OUTPUT_TABLE} (
          sum_transaction_amount DOUBLE,
-         count_transaction_amount DOUBLE, 
+         count_transaction_amount DOUBLE,
          mean_transaction_amount DOUBLE,
          maxtime TIMESTAMP(3)
        ) WITH (

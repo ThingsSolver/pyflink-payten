@@ -11,9 +11,8 @@ from pyflink.table import (
 )
 from pyflink.table.descriptors import Schema, OldCsv, Csv, FileSystem
 
-environment_settings = (
-    EnvironmentSettings.new_instance().in_batch_mode().use_blink_planner().build()
-)
+environment_settings = (EnvironmentSettings.new_instance(
+).in_batch_mode().use_blink_planner().build())
 t_env = BatchTableEnvironment.create(environment_settings=environment_settings)
 t_env.get_config().get_configuration().set_integer(
     "table.exec.resource.default-parallelism", 6

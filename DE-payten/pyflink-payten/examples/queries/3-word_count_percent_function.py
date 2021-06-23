@@ -53,7 +53,6 @@ t_env.connect(
     "mySink"
 )
 
-t_env.from_path("mySource").select("reviewText, percent_count(reviewText)").insert_into(
-    "mySink"
-)
+t_env.from_path("mySource").select(
+    "reviewText, percent_count(reviewText)").insert_into("mySink")
 t_env.execute("3-word_count_percent-function1")
