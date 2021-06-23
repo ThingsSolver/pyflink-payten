@@ -113,5 +113,10 @@ customers.to_csv(
     index=False,
     quoting=csv.QUOTE_NONNUMERIC,
 )
+pandas.DataFrame(customers.customer_id).to_csv(
+    "../data/customers_ids_no_" + str(number) + ".csv",
+    index=False,
+    quoting=csv.QUOTE_NONNUMERIC,
+)
 print("Exported data")
 print("--- %s seconds ---" % (time.time() - start_time))
