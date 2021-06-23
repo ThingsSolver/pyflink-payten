@@ -46,9 +46,11 @@ t_env.connect(
         "/opt/examples/data/output/3_word_count_percent_function_output.csv"
     )
 ).with_format(
-    OldCsv().field("reviewText", DataTypes.STRING()).field("counts", DataTypes.INT())
+    OldCsv().field("reviewText", DataTypes.STRING()).field("counts",
+                                                           DataTypes.INT())
 ).with_schema(
-    Schema().field("reviewText", DataTypes.STRING()).field("counts", DataTypes.INT())
+    Schema().field("reviewText", DataTypes.STRING()).field("counts",
+                                                           DataTypes.INT())
 ).create_temporary_table(
     "mySink"
 )
