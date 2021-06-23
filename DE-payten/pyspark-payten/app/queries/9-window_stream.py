@@ -47,7 +47,8 @@ def main():
 
     w.writeStream.outputMode("append").format("csv").option(
         "checkpointLocation", "/app/check"
-    ).option("path", "/app/output/9_window_stream_output").start().awaitTermination()
+    ).option("path", "/app/output/9_window_stream_output")\
+        .start().awaitTermination()
 
 
 if __name__ == "__main__":

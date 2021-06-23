@@ -39,7 +39,8 @@ spark.sql(
         max(cast(transaction_amount as double)) as max_transaction,
         avg(cast(salary as double)) as avg_salary,
         avg(cast(bonus as double)) as avg_bonus
-        from transactions t left join customers c on t.customer_id=c.customer_id
+        from transactions t left join customers c
+        on t.customer_id=c.customer_id
         left join products p on t.product_id = p.asin
         group by t.customer_id"""
 ).write.csv("/app/output/8_join_output", mode="overwrite")
