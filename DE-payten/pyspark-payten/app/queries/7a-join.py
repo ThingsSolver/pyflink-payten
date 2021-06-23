@@ -28,7 +28,7 @@ transactions.createOrReplaceTempView("transactions")
 
 spark.sql(
     """
-        select 
+        select
         avg(transaction_amount) as avg_ta,
         avg(salary+bonus) as avg_income,
         avg(salary+bonus) - avg(transaction_amount) as spending

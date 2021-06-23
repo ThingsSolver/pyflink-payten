@@ -28,10 +28,10 @@ transactions.createOrReplaceTempView("transactions")
 
 spark.sql(
     """
-        select 
+        select
         count(customer_id) as customers_no,
-        first(brand) as brand, 
-        product_id 
+        first(brand) as brand,
+        product_id
         from transactions t left join products p on t.product_id = p.asin
         group by product_id
         """

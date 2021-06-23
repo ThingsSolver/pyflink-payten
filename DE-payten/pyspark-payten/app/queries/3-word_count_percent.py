@@ -7,7 +7,7 @@ spark = (
     .getOrCreate()
 )
 
-regex = "\d+(?:\.\d+)?%"
+regex = "\\d+(?:\\.\\d+)?%"
 products_wc = (
     spark.read.option("escape", '"')
     .option("multiline", True)

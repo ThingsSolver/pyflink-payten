@@ -69,9 +69,14 @@ def title_office_org_salary_bonus():
     salary_range = title_and_salary_range[position["title"]]
 
     salary = (
-        round(random.randint(1000 * salary_range[0], 1000 * salary_range[1]) / 1000)
-        * 1000
-    )
+        round(
+            random.randint(
+                1000 *
+                salary_range[0],
+                1000 *
+                salary_range[1]) /
+            1000) *
+        1000)
     bonus_ratio = random.uniform(0.15, 0.2)
     bonus = round(salary * bonus_ratio / 500) * 500
     position.update({"salary": salary, "bonus": bonus})

@@ -20,7 +20,9 @@ def get_transaction_amount():
 
 
 def get_transaction_date(fake):
-    return fake.date_time_between(start_date="-60s", end_date="now").isoformat()
+    return fake.date_time_between(
+        start_date="-60s",
+        end_date="now").isoformat()
 
 
 def get_credit_card_provider(fake):

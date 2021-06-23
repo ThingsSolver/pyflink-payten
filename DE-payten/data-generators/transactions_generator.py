@@ -43,11 +43,9 @@ def pareto_seed_picker(customer_no, transaction_no, shape):
             sample.append(np.random.choice(custs, p=prob))
         prob_sum = (
             pandas.DataFrame(
-                pandas.DataFrame(sample)[0].value_counts() / transaction_no * 100
-            )
-            .head(head_no)
-            .sum()
-        )
+                pandas.DataFrame(sample)[0].value_counts() /
+                transaction_no *
+                100) .head(head_no) .sum())
         seeds_list.append(((float(prob_sum)), seed))
         break
     print(min(seeds_list))

@@ -28,7 +28,7 @@ transactions.createOrReplaceTempView("transactions")
 
 spark.sql(
     """
-        select 
+        select
         first(c.first_name),
         first(c.last_name),
         avg(transaction_amount) as avg_ta,

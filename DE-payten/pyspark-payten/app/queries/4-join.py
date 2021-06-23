@@ -28,7 +28,7 @@ transactions.createOrReplaceTempView("transactions")
 
 spark.sql(
     """
-    select 
+    select
     avg(cast(transaction_amount as double)) as avg_ta,
     min(cast(transaction_amount as double)) as min_ta,
     max(cast(transaction_amount as double)) as max_ta,

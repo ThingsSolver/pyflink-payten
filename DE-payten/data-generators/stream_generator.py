@@ -19,7 +19,9 @@ def get_transaction_amount():
 
 
 def get_transaction_date(fake):
-    return fake.date_time_between(start_date="-60s", end_date="now").isoformat()
+    return fake.date_time_between(
+        start_date="-60s",
+        end_date="now").isoformat()
 
 
 def create_financials_record():
@@ -29,7 +31,8 @@ def create_financials_record():
     }
 
 
-transactions = pandas.DataFrame([create_financials_record() for _ in range(2000)])
+transactions = pandas.DataFrame(
+    [create_financials_record() for _ in range(2000)])
 producer = KafkaProducer(
     bootstrap_servers=["localhost:9092"],
     value_serializer=lambda x: dumps(x).encode("utf-8"),

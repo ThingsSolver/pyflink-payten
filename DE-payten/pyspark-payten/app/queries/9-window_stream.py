@@ -27,9 +27,9 @@ def main():
             StructField("transaction_date", TimestampType()),
         ]
     )
-    json_df = string_df.withColumn("jsonData", from_json(col("value"), schema)).select(
-        "jsondata.*"
-    )
+    json_df = string_df.withColumn(
+        "jsonData", from_json(
+            col("value"), schema)).select("jsondata.*")
     w = (
         json_df.withWatermark("transaction_date", "60 seconds")
         .groupBy(window("transaction_date", "60 seconds "))
