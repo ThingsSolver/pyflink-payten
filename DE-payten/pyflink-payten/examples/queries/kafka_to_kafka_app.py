@@ -76,7 +76,8 @@ t_env.get_config().get_configuration().set_integer(
 t_env.get_config().get_configuration().set_integer(
     "python.fn-execution.bundle.time", 1000
 )
-t_env.get_config().get_configuration().set_boolean("pipeline.object-reuse", True)
+t_env.get_config().get_configuration().set_boolean("pipeline.object-reuse",
+                                                   True)
 
 t_env.register_function("mean", mean)
 t_env.register_function("sum", sum)

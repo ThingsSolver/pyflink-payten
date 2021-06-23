@@ -40,7 +40,8 @@ t_env.connect(
 ).create_temporary_table(
     "products"
 )
-t_env.connect(FileSystem().path("/opt/examples/data/input/customers.csv")).with_format(
+t_env.connect(FileSystem().path(
+    "/opt/examples/data/input/customers.csv")).with_format(
     OldCsv()
     .ignore_first_line()
     .field_delimiter(",")
