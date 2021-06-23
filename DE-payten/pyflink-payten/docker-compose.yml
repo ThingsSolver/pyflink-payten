@@ -1,12 +1,12 @@
 version: '2.1'
 services:
     jobmanager:
-        image: pyflink - image / develop: test
+        image: pyflink-image/develop:test
         build:
             context: ""
         restart: always
         volumes:
-            - . / examples: / opt / examples
+            - ./examples:/opt/examples
         hostname: "jobmanager"
         expose:
             - "6123"
@@ -16,9 +16,9 @@ services:
         environment:
             - JOB_MANAGER_RPC_ADDRESS = jobmanager
     taskmanager:
-        image: pyflink - image / develop: test
+        image: pyflink-image/develop:test
         volumes:
-            - . / examples: / opt / examples
+            - ./examples:/opt/examples
         expose:
             - "6121"
             - "6122"
@@ -26,6 +26,6 @@ services:
             - jobmanager
         command: taskmanager
         links:
-            - jobmanager: jobmanager
+            - jobmanager:jobmanager
         environment:
             - JOB_MANAGER_RPC_ADDRESS = jobmanager
