@@ -10,7 +10,8 @@ from pyflink.table.udf import udaf
 
 env = StreamExecutionEnvironment.get_execution_environment()
 env.set_parallelism(1)
-environment_settings = EnvironmentSettings.new_instance().use_blink_planner().build()
+environment_settings = EnvironmentSettings.new_instance().\
+    use_blink_planner().build()
 t_env = StreamTableEnvironment.create(
     env, environment_settings=environment_settings)
 
