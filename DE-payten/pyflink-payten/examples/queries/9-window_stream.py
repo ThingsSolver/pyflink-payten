@@ -26,7 +26,7 @@ def transaction_job():
     register_transaction_sink(st_env)
 
     st_env.from_path("source").window(
-        Tumble.over("60.seconds").on("rowtime").alias("w")
+        Tumble.over("30.seconds").on("rowtime").alias("w")
     ).group_by("w").select(
         "sum(transaction_amount) as sum_ta, "
         "count(transaction_amount), "
@@ -64,7 +64,7 @@ def register_transactions_source(st_env):
         .rowtime(
             Rowtime()
             .timestamps_from_field("transaction_date")
-            .watermarks_periodic_bounded(60000)
+            .watermarks_periodic_bounded(30000)
         )
     ).in_append_mode().register_table_source(
         "source"

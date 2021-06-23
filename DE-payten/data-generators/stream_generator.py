@@ -37,11 +37,13 @@ producer = KafkaProducer(
     value_serializer=lambda x: dumps(x).encode("utf-8"),
 )
 
-for row in transactions.itertuples():
-    data1 = str(row.transaction_amount)
-    data2 = row.transaction_date + "Z"
-    data = {"transaction_amount": data1, "transaction_date": data2}
-    future = producer.send("transactions", value=data)
-    result = future.get(timeout=60)
+while True:
+    for row in transactions.itertuples():
+        data1 = str(row.transaction_amount)
+        data2 = row.transaction_date + "Z"
+        data = {"transaction_amount": data1, "transaction_date": data2}
+        future = producer.send("transactions", value=data)
+        result = future.get(timeout=60)
 
-print("--- %s seconds ---" % (time.time() - start_time))
+    print("--- %s seconds ---" % (time.time() - start_time))
+    time.sleep(60)

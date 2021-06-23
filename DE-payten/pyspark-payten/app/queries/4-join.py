@@ -10,17 +10,17 @@ spark = (
 products = (
     spark.read.option("escape", '"')
     .option("multiline", True)
-    .csv("/app/input/products_no_duplicates.csv", header=True, sep=",")
+    .csv("/app/input/big/products_no_duplicates.csv", header=True, sep=",")
 )
 customers = (
     spark.read.option("escape", '"')
     .option("multiline", True)
-    .csv("/app/input/customers.csv", header=True, sep=",")
+    .csv("/app/input/big/customers.csv", header=True, sep=",")
 )
 transactions = (
     spark.read.option("escape", '"')
     .option("multiline", True)
-    .csv("/app/input/transactions.csv", header=True, sep=",")
+    .csv("/app/input/big/transactions.csv", header=True, sep=",")
 )
 products.createOrReplaceTempView("products")
 customers.createOrReplaceTempView("customers")

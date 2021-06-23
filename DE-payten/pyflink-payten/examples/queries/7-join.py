@@ -121,7 +121,7 @@ final_table = t_env.sql_query(
         from transactions t left join customers c
         on t.customer_id = c.customer_id
         group by c.customer_id
-        --having avg(transaction_amount) > 500
+        having avg(transaction_amount) > 500
     """
 )
 
