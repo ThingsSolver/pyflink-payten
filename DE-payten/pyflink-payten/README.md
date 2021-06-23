@@ -12,7 +12,7 @@ git clone https://github.com/ThingsSolver/pyflink-payten.git
 * **Linux & MacOS**
 
 ```bash
-cd pyflink-payten/pyflink-payten
+cd DEpyflink-payten/pyflink-payten
 docker-compose up -d
 ```
 
