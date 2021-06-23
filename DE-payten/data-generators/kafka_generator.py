@@ -20,7 +20,7 @@ def get_transaction_amount():
 
 
 def get_transaction_date(fake):
-    return fake.date_time_between(start_date='-60s', end_date='now').isoformat()
+    return fake.date_time_between(start_date="-60s", end_date="now").isoformat()
 
 
 def get_credit_card_provider(fake):
@@ -45,19 +45,21 @@ def get_job(fake):
 
 def create_financials_record(fake):
     return {
-        'client_id': get_client_id(),
-        'credit_card_number': get_credit_card_number(fake),
-        'credit_card_provider': get_credit_card_provider(fake),
-        'credit_card_security_number': get_security_number(fake),
-        'company': get_company(fake),
-        'job': get_job(fake),
-        'transaction_amount': get_transaction_amount(),
-        'transaction_date': get_transaction_date(fake).replace("T", " ")
+        "client_id": get_client_id(),
+        "credit_card_number": get_credit_card_number(fake),
+        "credit_card_provider": get_credit_card_provider(fake),
+        "credit_card_security_number": get_security_number(fake),
+        "company": get_company(fake),
+        "job": get_job(fake),
+        "transaction_amount": get_transaction_amount(),
+        "transaction_date": get_transaction_date(fake).replace("T", " "),
     }
 
 
 def create_transactions(fake):
-    transactions = pandas.DataFrame([create_financials_record(fake) for _ in range(2000)])
+    transactions = pandas.DataFrame(
+        [create_financials_record(fake) for _ in range(2000)]
+    )
     for row in transactions.itertuples():
         client_id = row.client_id
         credit_card_number = row.credit_card_number
@@ -68,21 +70,24 @@ def create_transactions(fake):
         transaction_amount = str(row.transaction_amount)
         transaction_date = row.transaction_date
         data = {
-            'client_id': client_id,
-            'credit_card_number': credit_card_number,
-            'credit_card_provider': credit_card_provider,
-            'credit_card_security_number': credit_card_security_number,
-            'company': company,
-            'job': job,
-            'transaction_amount': transaction_amount,
-            'transaction_date': transaction_date}
-        future = producer.send('transactions', value=data)
+            "client_id": client_id,
+            "credit_card_number": credit_card_number,
+            "credit_card_provider": credit_card_provider,
+            "credit_card_security_number": credit_card_security_number,
+            "company": company,
+            "job": job,
+            "transaction_amount": transaction_amount,
+            "transaction_date": transaction_date,
+        }
+        future = producer.send("transactions", value=data)
         result = future.get(timeout=60)
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
-                         value_serializer=lambda x: dumps(x).encode('utf-8'))
+producer = KafkaProducer(
+    bootstrap_servers=["localhost:9092"],
+    value_serializer=lambda x: dumps(x).encode("utf-8"),
+)
 while True:
     create_transactions(faker)
     time.sleep(30)

@@ -1,5 +1,10 @@
 from pyflink.datastream import StreamExecutionEnvironment, TimeCharacteristic
-from pyflink.table import TableConfig, DataTypes, StreamTableEnvironment, EnvironmentSettings
+from pyflink.table import (
+    TableConfig,
+    DataTypes,
+    StreamTableEnvironment,
+    EnvironmentSettings,
+)
 from pyflink.table.window import Tumble
 from pyflink.table.udf import udaf
 
@@ -10,7 +15,7 @@ t_env = StreamTableEnvironment.create(env, environment_settings=environment_sett
 
 INPUT_TABLE = "my_topic"
 INPUT_TOPIC = "transactions"
-LOCAL_KAFKA = 'host.docker.internal:19092'
+LOCAL_KAFKA = "host.docker.internal:19092"
 OUTPUT_TABLE = "my_topic_output"
 OUTPUT_TOPIC = "my-topic-out"
 
@@ -40,7 +45,8 @@ ddl_source = f"""
         job STRING,
         transaction_amount DOUBLE,
         transaction_date TIMESTAMP(3),
-        WATERMARK FOR transaction_date AS transaction_date - INTERVAL '60' SECOND
+        WATERMARK FOR transaction_date AS
+        transaction_date - INTERVAL '60' SECOND
        ) WITH (
            'connector' = 'kafka',
            'topic' = '{INPUT_TOPIC}',
@@ -63,8 +69,12 @@ ddl_sink = f"""
        )
    """
 
-t_env.get_config().get_configuration().set_integer("python.fn-execution.bundle.size", 500)
-t_env.get_config().get_configuration().set_integer("python.fn-execution.bundle.time", 1000)
+t_env.get_config().get_configuration().set_integer(
+    "python.fn-execution.bundle.size", 500
+)
+t_env.get_config().get_configuration().set_integer(
+    "python.fn-execution.bundle.time", 1000
+)
 t_env.get_config().get_configuration().set_boolean("pipeline.object-reuse", True)
 
 t_env.register_function("mean", mean)
@@ -73,13 +83,15 @@ t_env.register_function("count", count)
 t_env.execute_sql(ddl_source)
 t_env.execute_sql(ddl_sink)
 
-t_env.from_path('my_topic') \
-    .window(Tumble.over("60.seconds").on("transaction_date").alias("w")) \
-    .group_by("w") \
-    .select("sum(transaction_amount) as sum_transaction_amount, "
-            "count(transaction_amount) as count_transaction_amount, "
-            "mean(transaction_amount) as mean_transaction_amount, "
-            "w.end as maxtime") \
-    .insert_into('my_topic_output')
+t_env.from_path("my_topic").window(
+    Tumble.over("60.seconds").on("transaction_date").alias("w")
+).group_by("w").select(
+    "sum(transaction_amount) as sum_transaction_amount, "
+    "count(transaction_amount) as count_transaction_amount, "
+    "mean(transaction_amount) as mean_transaction_amount, "
+    "w.end as maxtime"
+).insert_into(
+    "my_topic_output"
+)
 
 t_env.execute("kafka-to-kafka-app")
