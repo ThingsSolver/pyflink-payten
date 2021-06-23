@@ -14,7 +14,7 @@ services:
             - "8088:8088"
         command: jobmanager
         environment:
-            - JOB_MANAGER_RPC_ADDRESS = jobmanager
+            - JOB_MANAGER_RPC_ADDRESS=jobmanager
     taskmanager:
         image: pyflink-image/develop:test
         volumes:
@@ -28,4 +28,4 @@ services:
         links:
             - jobmanager:jobmanager
         environment:
-            - JOB_MANAGER_RPC_ADDRESS = jobmanager
+            - JOB_MANAGER_RPC_ADDRESS=jobmanager
