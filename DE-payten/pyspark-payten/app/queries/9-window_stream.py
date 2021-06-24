@@ -14,7 +14,7 @@ def main():
 
     lines = (
         spark.readStream.format("kafka")
-        .option("kafka.bootstrap.servers", "host.docker.internal:19092")
+        .option("kafka.bootstrap.servers", "host.docker.internal:9092")
         .option("subscribe", "transactions")
         .option("startingOffsets", "latest")
         .load()
@@ -31,8 +31,8 @@ def main():
         "jsonData", from_json(
             col("value"), schema)).select("jsondata.*")
     w = (
-        json_df.withWatermark("transaction_date", "60 seconds")
-        .groupBy(window("transaction_date", "60 seconds "))
+        json_df.withWatermark("transaction_date", "30 seconds")
+        .groupBy(window("transaction_date", "30 seconds "))
         .agg(
             sum("transaction_amount").alias("sum_ta"),
             count("transaction_amount").alias("count_ta"),

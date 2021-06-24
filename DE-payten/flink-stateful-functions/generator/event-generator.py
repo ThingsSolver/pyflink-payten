@@ -31,7 +31,7 @@ from kafka import KafkaProducer
 from kafka import KafkaConsumer
 
 KAFKA_BROKER = "kafka-broker:9092"
-NAMES = ["Jerry", "George", "Elaine", "Kramer", "Newman", "Frank"]
+NAMES = ["Violeta", "Kramer", "Newman", "Frank"]
 
 
 def random_requests():

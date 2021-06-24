@@ -21,3 +21,4 @@ services:
       - "SPARK_MASTER=spark://spark-master:7077"
     volumes:
       - ./app/:/app
+
