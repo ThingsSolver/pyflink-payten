@@ -34,6 +34,8 @@ services:
   master:
     build:
       context: .
+    # uncomment and adjust savepoint path to start from a savepoint
+    # command: -s /savepoint-dir/savepoint-8b1280-53fa07f1329b
     expose:
       - "6123"
     ports:
