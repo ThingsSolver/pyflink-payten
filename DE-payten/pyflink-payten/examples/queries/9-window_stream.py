@@ -44,8 +44,8 @@ def register_transactions_source(st_env):
         .version("universal")
         .topic("transactions")
         .start_from_latest()
-        .property("zookeeper.connect", "host.docker.internal:2181")
-        .property("bootstrap.servers", "host.docker.internal:19092")
+        .property("zookeeper.connect", "zookeeper:2181")
+        .property("bootstrap.servers", "kafka-broker:9092")
     ).with_format(
         Json()
         .fail_on_missing_field(True)
