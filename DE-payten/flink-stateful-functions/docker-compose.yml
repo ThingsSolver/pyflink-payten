@@ -61,7 +61,7 @@ services:
       - MASTER_HOST=master
     volumes:
       - ./checkpoint-dir:/checkpoint-dir
-      - ./savepoint-dir:/savepoint-dir
+      #- ./savepoint-dir:/savepoint-dir
   python-worker:
     build:
       context: ./greeter
