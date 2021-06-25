@@ -34,3 +34,15 @@ Run test job:
 ```bash
 docker-compose exec jobmanager . /bin/flink run -py /opt/examples/queries/1-word_count.py
 ```
+
+Input data folder should be:
+
+```bash
+/pyflink-payten/examples/data/input
+```
+
+Output data folder should be:
+
+```bash
+/pyflink-payten/examples/data/output
+```
