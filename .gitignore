@@ -1,4 +1,4 @@
 .idea
 .examples/data/
-/ML-payten/.ipynb_checkpoints/
-.csv
+/ML-payten/notebooks/.ipynb_checkpoints/*
+*.csv
